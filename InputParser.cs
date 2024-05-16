@@ -35,4 +35,6 @@ public class InputParser
 
     private IEnumerable<string> _conditions;
     public IEnumerable<string> ConditionsStrings => _conditions;
+    public IEnumerable<string> ConditionsColumns => 
+        _conditions.Select(c=>c.Split(_equalSign)[0]);
 }
