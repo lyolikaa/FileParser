@@ -1,4 +1,6 @@
-﻿using FileParser;
+﻿using System.Runtime.InteropServices.JavaScript;
+using FileParser;
+using Newtonsoft.Json.Linq;
 
 Console.WriteLine($"start");
 
@@ -23,7 +25,18 @@ var absentColumns = parser.ConditionsColumns.Except(existingColumns);
 Console.WriteLine($"column(s) not found: {string.Join(";", absentColumns)}");
 Console.WriteLine($"column(s) to search: {string.Join(";", existingColumns)}");
 
+//get data
+var data = LogReader.GetData(filenames.FirstOrDefault(), columns);
+var searchConditions = parser.SearchConditions(existingColumns);
+foreach (var search in searchConditions)
+{
+    data = data.Where(search);
+}
 
+data.ToList();
+//TODO log count
+//TODO format output
+//TODO database, save to sqlite
 
 
 Console.WriteLine($"OK");
