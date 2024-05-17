@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices.JavaScript;
 using FileParser;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 Console.WriteLine($"start");
@@ -33,9 +35,16 @@ foreach (var search in searchConditions)
     data = data.Where(search);
 }
 
-data.ToList();
-//TODO log count
-//TODO format output
+JObject logResults = new();
+logResults.Add("searchQuery", input);
+logResults.Add("datetime", DateTime.Now);
+logResults.Add("logsCount", data.Count());
+logResults.Add("result", new JArray(data));
+var jsonString = JsonConvert.SerializeObject(
+    logResults, Formatting.Indented,
+    new JsonConverter[] {new StringEnumConverter()});
+Console.WriteLine(jsonString);
+
 //TODO database, save to sqlite
 
 

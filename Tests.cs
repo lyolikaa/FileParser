@@ -17,8 +17,7 @@ public class Tests
     public void ValidateCondition(string condition, bool res)
     {
         var parser = new InputParser("");
-        // Assert.AreEqual(parser.ValidateCondition(condition), res);
-
+        Assert.That(parser.ValidateCondition(condition), Is.EqualTo(res));
     }
 
 }
