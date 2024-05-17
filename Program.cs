@@ -36,8 +36,8 @@ foreach (var search in searchConditions)
 }
 
 JObject logResults = new();
-logResults.Add("searchQuery", input);
 logResults.Add("datetime", DateTime.Now);
+logResults.Add("searchQuery", input);
 logResults.Add("logsCount", data.Count());
 logResults.Add("result", new JArray(data));
 var jsonString = JsonConvert.SerializeObject(
@@ -45,8 +45,8 @@ var jsonString = JsonConvert.SerializeObject(
     new JsonConverter[] {new StringEnumConverter()});
 Console.WriteLine(jsonString);
 
-//TODO database, save to sqlite
-
+//save to sqlite database
+new DB().Save(logResults);
 
 Console.WriteLine($"OK");
     void WriteError(string message)
